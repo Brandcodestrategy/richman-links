@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fleet Quote Request — Richman's Affairs Global Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #D4AF37;
+    --gold-light: #F5E6A3;
+    --gold-deep: #8C6B1F;
+    --black: #0a0a0a;
+    --black-2: #111111;
+    --black-3: #1a1a1a;
+    --white: #ffffff;
+    --muted: rgba(255,255,255,0.45);
+    --border: rgba(212,175,55,0.25);
+    --border-hover: rgba(212,175,55,0.6);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ——— HEADER ——— */
+  .page-header {
+    background: var(--black-2);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .logo-mark {
+    width: 54px;
+    height: 54px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .logo-mark span {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+
+  .brand-name h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .brand-name p {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* ——— HERO SECTION ——— */
+  .hero {
+    background: linear-gradient(160deg, #111111 0%, #0a0a0a 60%);
+    padding: 64px 40px 48px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, transparent, var(--gold));
+  }
+
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .hero-label::before,
+  .hero-label::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold-deep);
+  }
+
+  .hero h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+
+  .hero h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero p {
+    font-size: 14px;
+    color: var(--muted);
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* ——— FORM CONTAINER ——— */
+  .form-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 40px 80px;
+  }
+
+  .form-section {
+    margin-bottom: 40px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-grid.single { grid-template-columns: 1fr; }
+
+  @media (max-width: 600px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .form-wrap { padding: 32px 20px 60px; }
+    .page-header { padding: 20px; }
+    .hero { padding: 48px 20px 36px; }
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .field.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  label .req {
+    color: var(--gold);
+    margin-left: 2px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="number"],
+  select,
+  textarea {
+    background: var(--black-3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 14px 16px;
+    transition: border-color 0.2s, background 0.2s;
+    width: 100%;
+    outline: none;
+    -webkit-appearance: none;
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: rgba(255,255,255,0.2);
+  }
+
+  input:hover, select:hover, textarea:hover {
+    border-color: var(--border-hover);
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--gold);
+    background: #1e1e1e;
+  }
+
+  select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23D4AF37' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+  }
+
+  select option {
+    background: var(--black-2);
+    color: var(--white);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.6;
+  }
+
+  /* ——— CHECKBOXES ——— */
+  .checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .check-item:hover {
+    border-color: var(--border-hover);
+    color: var(--white);
+  }
+
+  .check-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    accent-color: var(--gold);
+    cursor: pointer;
+  }
+
+  .check-item.selected {
+    border-color: var(--gold);
+    background: rgba(212,175,55,0.06);
+    color: var(--white);
+  }
+
+  /* ——— SUBMIT ——— */
+  .submit-wrap {
+    margin-top: 48px;
+    text-align: center;
+  }
+
+  .submit-note {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    line-height: 1.7;
+  }
+
+  .btn-submit {
+    background: var(--gold);
+    border: none;
+    border-radius: 3px;
+    color: #000;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    padding: 18px 52px;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .btn-submit:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-submit:active {
+    transform: translateY(0);
+  }
+
+  .btn-submit svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* ——— SUCCESS STATE ——— */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 80px 40px;
+  }
+
+  .success-icon {
+    width: 64px;
+    height: 64px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 28px;
+  }
+
+  .success-icon svg { stroke: var(--gold); }
+
+  .success-screen h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .success-screen p {
+    font-size: 14px;
+    color: var(--muted);
+    max-width: 400px;
+    margin: 0 auto 32px;
+    line-height: 1.8;
+  }
+
+  .whatsapp-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #128C7E;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    transition: background 0.2s;
+  }
+
+  .whatsapp-cta:hover { background: #075E54; }
+
+  /* ——— FOOTER ——— */
+  .page-footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 40px;
+    text-align: center;
+  }
+
+  .tagline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+  }
+
+  .footer-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ——— DIVIDER ——— */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 8px 0 32px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="page-header">
+  <div class="logo-mark"><span>RA</span></div>
+  <div class="brand-name">
+    <h1>Richman's Affairs Global Services</h1>
+    <p>Fleet &amp; Corporate Mobility</p>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">Fleet Quote Request</div>
+  <h2>Corporate &amp; <em>Fleet Enquiry</em></h2>
+  <p>Complete the form below and our team will respond with a tailored quote within 24 hours.</p>
+</section>
+
+<!-- FORM -->
+<div class="form-wrap">
+  <form id="fleetForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+
+    <!-- SECTION 1: Company Details -->
+    <div class="form-section">
+      <div class="section-label">Company &amp; Contact</div>
+      <div class="form-grid">
+        <div class="field">
+          <label for="company">Company Name <span class="req">*</span></label>
+          <input type="text" id="company" name="company" placeholder="e.g. Sterling Bank PLC" required>
+        </div>
+        <div class="field">
+          <label for="contact">Contact Person <span class="req">*</span></label>
+          <input type="text" id="contact" name="contact" placeholder="Full name" required>
+        </div>
+        <div class="field">
+          <label for="phone">WhatsApp / Phone <span class="req">*</span></label>
+          <input type="tel" id="phone" name="phone" placeholder="+234 800 000 0000" required>
+        </div>
+        <div class="field">
+          <label for="email">Email Address <span class="req">*</span></label>
+          <input type="email" id="email" name="email" placeholder="your@company.com" required>
+        </div>
+        <div class="field">
+          <label for="industry">Industry / Sector</label>
+          <select id="industry" name="industry">
+            <option value="" disabled selected>Select industry</option>
+            <option>Banking &amp; Finance</option>
+            <option>Oil &amp; Gas</option>
+            <option>Construction &amp; Engineering</option>
+            <option>Hospitality &amp; Hotels</option>
+            <option>Government &amp; Institutions</option>
+            <option>Healthcare</option>
+            <option>NGO &amp; International Organisations</option>
+            <option>Technology</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="role">Your Role</label>
+          <select id="role" name="role">
+            <option value="" disabled selected>Select role</option>
+            <option>CEO / MD / Director</option>
+            <option>Admin / Operations Manager</option>
+            <option>HR / People Manager</option>
+            <option>Procurement Officer</option>
+            <option>Executive Assistant</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: Vehicle Requirements -->
+    <div class="form-section">
+      <div class="section-label">Vehicle Requirements</div>
+      <div class="form-grid">
+        <div class="field full">
+          <label>Services Required <span class="req">*</span></label>
+          <div class="checkbox-group" id="servicesGroup">
+            <label class="check-item">
+              <input type="checkbox" name="services[]" value="Staff Shuttle">
+              Staff Shuttle
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="services[]" value="Executive Movement">
+              Executive Movement
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="services[]" value="Airport Transfers">
+              Airport Transfers
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="services[]" value="Event & Conference">
+              Event &amp; Conference
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="services[]" value="Site & Field Logistics">
+              Site &amp; Field Logistics
+            </label>
+            <label class="check-item">
+              <input type="checkbox" name="services[]" value="Long-Term Fleet Contract">
+              Long-Term Fleet
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <label for="vehicle_type">Vehicle Type Preferred</label>
+          <select id="vehicle_type" name="vehicle_type">
+            <option value="" disabled selected>Select vehicle</option>
+            <option>Toyota Coaster Bus (25–30 pax)</option>
+            <option>Toyota HiAce</option>
+            <option>Toyota Hilux (Executive)</option>
+            <option>Sedan (Executive Car)</option>
+            <option>Open to recommendation</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="vehicle_count">Number of Vehicles</label>
+          <input type="number" id="vehicle_count" name="vehicle_count" placeholder="e.g. 3" min="1">
+        </div>
+        <div class="field">
+          <label for="passenger_count">Approximate Passenger Volume</label>
+          <input type="text" id="passenger_count" name="passenger_count" placeholder="e.g. 30 staff daily">
+        </div>
+        <div class="field">
+          <label for="driver">Driver Required?</label>
+          <select id="driver" name="driver">
+            <option value="" disabled selected>Select option</option>
+            <option>Yes — include professional driver</option>
+            <option>No — vehicle only</option>
+            <option>To be discussed</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: Booking Details -->
+    <div class="form-section">
+      <div class="section-label">Booking &amp; Location</div>
+      <div class="form-grid">
+        <div class="field">
+          <label for="duration">Contract Duration <span class="req">*</span></label>
+          <select id="duration" name="duration" required>
+            <option value="" disabled selected>Select duration</option>
+            <option>Daily hire</option>
+            <option>Weekly hire</option>
+            <option>Monthly contract</option>
+            <option>Quarterly contract</option>
+            <option>Annual fleet contract</option>
+            <option>One-off event</option>
+            <option>To be discussed</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="start_date">Preferred Start Date</label>
+          <input type="date" id="start_date" name="start_date">
+        </div>
+        <div class="field">
+          <label for="location">Primary Location / Route <span class="req">*</span></label>
+          <input type="text" id="location" name="location" placeholder="e.g. Port Harcourt — GRA to PHIA" required>
+        </div>
+        <div class="field">
+          <label for="budget">Estimated Budget Range</label>
+          <select id="budget" name="budget">
+            <option value="" disabled selected>Select range</option>
+            <option>Below ₦500,000</option>
+            <option>₦500,000 – ₦1,000,000</option>
+            <option>₦1,000,000 – ₦3,000,000</option>
+            <option>₦3,000,000 – ₦10,000,000</option>
+            <option>Above ₦10,000,000</option>
+            <option>Prefer not to say</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="notes">Additional Requirements or Notes</label>
+          <textarea id="notes" name="notes" placeholder="Share any specific needs — routes, schedules, special requirements, or questions for our team."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOW DID YOU HEAR -->
+    <div class="form-section">
+      <div class="section-label">Source</div>
+      <div class="form-grid single">
+        <div class="field">
+          <label for="source">How did you hear about us?</label>
+          <select id="source" name="source">
+            <option value="" disabled selected>Select source</option>
+            <option>Instagram (@richmansaffairsglobal)</option>
+            <option>WhatsApp referral</option>
+            <option>LinkedIn</option>
+            <option>Word of mouth / referral</option>
+            <option>Google search</option>
+            <option>Previous client</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-wrap">
+      <p class="submit-note">Our team will review your request and respond with a tailored quote within 24 hours.<br>For urgent enquiries, reach us directly on WhatsApp.</p>
+      <button type="submit" class="btn-submit" id="submitBtn">
+        Submit Fleet Request
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+
+  </form>
+
+  <!-- SUCCESS STATE -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6L9 17l-5-5"/>
+      </svg>
+    </div>
+    <h3>Request Received.</h3>
+    <p>Thank you. Our team will review your fleet requirements and return to you with a tailored quote within 24 hours.</p>
+    <a href="https://wa.me/2349110739763?text=Hello%2C%20I%20just%20submitted%20a%20fleet%20quote%20request%20and%20wanted%20to%20follow%20up." class="whatsapp-cta" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Follow Up on WhatsApp
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <div class="tagline">Moving with Confidence. Anywhere.</div>
+  <div class="footer-note">@richmansaffairsglobal · Port Harcourt, Nigeria · +234 911 073 9763</div>
+</footer>
+
+<script>
+  // Checkbox visual toggle
+  document.querySelectorAll('.check-item input[type="checkbox"]').forEach(function(cb) {
+    cb.addEventListener('change', function() {
+      this.closest('.check-item').classList.toggle('selected', this.checked);
+    });
+  });
+
+  // Form submission
+  var form = document.getElementById('fleetForm');
+  var successScreen = document.getElementById('successScreen');
+  var submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    submitBtn.textContent = 'Sending…';
+    submitBtn.disabled = true;
+
+    var formData = new FormData(form);
+    var action = form.getAttribute('action');
+
+    // If using Formspree (replace YOUR_FORM_ID with actual ID)
+    if (action.includes('formspree')) {
+      fetch(action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(function(res) {
+        if (res.ok) { showSuccess(); }
+        else { showError(); }
+      })
+      .catch(function() { showError(); });
+    } else {
+      // Demo mode — show success immediately
+      setTimeout(showSuccess, 800);
+    }
+  });
+
+  function showSuccess() {
+    form.style.display = 'none';
+    successScreen.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showError() {
+    submitBtn.textContent = 'Try Again';
+    submitBtn.disabled = false;
+    alert('Something went wrong. Please try WhatsApp directly: +234 911 073 9763');
+  }
+
+  // Set min date to today
+  var today = new Date().toISOString().split('T')[0];
+  document.getElementById('start_date').setAttribute('min', today);
+</script>
+
+</body>
+</html>
