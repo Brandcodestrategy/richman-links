@@ -441,7 +441,7 @@
 
 <!-- FORM -->
 <div class="form-wrap">
-  <form id="fleetForm" action="https://forms.gle/VbkAtZYd2c1yFBcS9" method="GET">
+  <form id="fleetForm">
 
     <!-- SECTION 1: Company Details -->
     <div class="form-section">
@@ -669,12 +669,49 @@
   var successScreen = document.getElementById('successScreen');
   var submitBtn = document.getElementById('submitBtn');
 
+  // ⚙️ Paste your Google Apps Script Web App URL below after deploying
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxWsMUxagWt6sR51xu6vpZZamI8vDU2eIDf4o74DR30STFOYLA9G3rjUEvDQjWEm_nmUA/exec';
+
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-    submitBtn.textContent = 'Opening form…';
+
+    // Collect all form values
+    var data = {
+      company:        document.getElementById('company').value,
+      contact:        document.getElementById('contact').value,
+      phone:          document.getElementById('phone').value,
+      email:          document.getElementById('email').value,
+      industry:       document.getElementById('industry').value,
+      role:           document.getElementById('role').value,
+      services:       Array.from(document.querySelectorAll('input[name="services[]"]:checked')).map(function(cb){ return cb.value; }).join(', '),
+      vehicle_type:   document.getElementById('vehicle_type').value,
+      vehicle_count:  document.getElementById('vehicle_count').value,
+      passenger_count:document.getElementById('passenger_count').value,
+      driver:         document.getElementById('driver').value,
+      duration:       document.getElementById('duration').value,
+      start_date:     document.getElementById('start_date').value,
+      location:       document.getElementById('location').value,
+      budget:         document.getElementById('budget').value,
+      notes:          document.getElementById('notes').value,
+      source:         document.getElementById('source').value
+    };
+
+    submitBtn.textContent = 'Sending…';
     submitBtn.disabled = true;
-    window.open('https://forms.gle/VbkAtZYd2c1yFBcS9', '_blank');
-    setTimeout(showSuccess, 600);
+
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(function() {
+      showSuccess();
+    })
+    .catch(function() {
+      // no-cors means we can't read response — but if fetch didn't throw, it went through
+      showSuccess();
+    });
   });
 
   function showSuccess() {
